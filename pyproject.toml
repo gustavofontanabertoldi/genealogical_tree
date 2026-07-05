@@ -1,0 +1,19 @@
+[project]
+name = "genealoical-tree"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Gustavo Fontana Bertoldi",email = "gustavobertoldi20@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "django (>=6.0.6,<7.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "genealoical_tree", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
