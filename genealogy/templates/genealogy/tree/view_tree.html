@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Inicial</title>
+    <title>Árvores</title>
 </head>
 <body>
     <div class="container">
-        <h1>Bem-vindo ao Genealogical Tree</h1>
+        <h1> Bem Vindo a {{tree.name}}!</h1>
+    </div>
+    <div class="container">
+        <h4>Veja as informações</h4>
     </div>
     <div>
-        <button type="button" onclick="window.location.href='{% url 'trees' %}'">
-            Ir para Árvores
+        <button type="button" onclick="window.location.href='{% url 'index' %}'">
+            Voltar
         </button>
     </div>
 </body>

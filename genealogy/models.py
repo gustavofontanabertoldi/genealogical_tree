@@ -4,6 +4,9 @@ class Tree(models.Model):
     name = models.CharField(max_length=100 ,db_index=True)
     description = models.CharField(max_length=1000)
     created_at = models.DateTimeField("Data de criação")
+    
+    def __str__(self):
+        return self.name
 
 class Person(models.Model):
     tree = models.ForeignKey(Tree, on_delete=models.CASCADE)
@@ -17,9 +20,13 @@ class Person(models.Model):
         default=SexOptions.MASCULINO
     )
     birth_date = models.DateField() # aqui tem um problema... como representar "entre 1719 e 1722?" ou "antes de 1750?"
-    death_date = models.DateField(null=True)
+    death_date = models.DateField(null=True, blank=True)
+    
+    def __str__(self):
+        return self.full_name
 
 class Event(models.Model):
+    event_name = models.CharField(max_length=100)
     class EventType(models.TextChoices):
         BIRTH = 'B', 'Nascimento'
         WEDDING = 'W','Casamento'
@@ -37,8 +44,12 @@ class Event(models.Model):
     event_date = models.DateField("Data do evento")
     event_location = models.CharField(max_length=200)
     description = models.TextField()
+    
+    def __str__(self):
+        return self.event_name
 
 class Document(models.Model):
+    title = models.CharField(max_length=100)
     class DocType(models.TextChoices):
         CERTIFICATE = 'C', 'Certidão'
         PHOTOGRAPH = 'P', 'Fotografia'
@@ -55,6 +66,9 @@ class Document(models.Model):
     file = models.FileField(upload_to="documentos/%Y/%m/%d/")
     transcription = models.TextField(blank=True, null=True)
     observations = models.TextField(blank=True, null=True)
+    
+    def __str__(self):
+        return self.title
 
 class EventParticipant(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)

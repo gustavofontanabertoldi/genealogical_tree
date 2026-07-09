@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Árvores</title>
+</head>
+<body>
+    <div class="container">
+        <h1> Bem Vindo a Árvores!</h1>
+    </div>
+    <div class="container">
+        <h4>Veja todas as árvores</h4>
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome da árvore</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tree in trees %}
+                <tr>
+                    <td>{{tree.id}}</td>
+                    <td>
+                        <a href="{% url 'view_tree' tree.id %}">{{ tree.name }}</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td>Nenhum documento cadastrado ainda.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <button type="button" onclick="window.location.href='{% url 'index' %}'">
+            Voltar
+        </button>
+    </div>
+</body>
+</html>
