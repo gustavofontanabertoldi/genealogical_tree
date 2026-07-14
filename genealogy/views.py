@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 
 from .models import Document, Event, EventParticipant, Person, Tree
+from.forms import PersonForm
 
 #============
 # Index (views)
@@ -21,5 +22,30 @@ def trees(request):
 
 def view_tree(request, id):
     tree = get_object_or_404(Tree, pk=id)
-    context = {"tree": tree}
+    context = {
+        "tree": tree,
+        "persons": tree.persons.all()
+    }
     return render(request, "genealogy/tree/view_tree.html", context)
+
+#============
+# Person (views)
+#============
+
+def add_person(request, id):
+    tree = get_object_or_404(Tree, pk=id)
+    if request.method == "POST":
+        form = PersonForm(request.POST)
+        if form.is_valid():
+            person = form.save(commit=False)
+            person.tree = tree
+            person.save()
+            return redirect("view_tree", id=tree.id)
+    else:
+        form = PersonForm()
+    
+    context = {
+            "form":form,
+            "tree":tree 
+        }
+    return render(request, "genealogy/person/add_person.html", context)

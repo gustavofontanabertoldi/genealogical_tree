@@ -9,7 +9,7 @@ class Tree(models.Model):
         return self.name
 
 class Person(models.Model):
-    tree = models.ForeignKey(Tree, on_delete=models.CASCADE)
+    tree = models.ForeignKey(Tree, on_delete=models.CASCADE, related_name="persons")
     full_name = models.CharField(max_length=300, db_index=True)
     class SexOptions(models.TextChoices):
         MASCULINO = 'M', 'Masculino'
@@ -49,7 +49,7 @@ class Event(models.Model):
         return self.event_name
 
 class Document(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, default="Sem título")
     class DocType(models.TextChoices):
         CERTIFICATE = 'C', 'Certidão'
         PHOTOGRAPH = 'P', 'Fotografia'

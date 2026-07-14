@@ -9,11 +9,27 @@
     <div class="container">
         <h1> Bem Vindo a {{tree.name}}!</h1>
     </div>
+    
     <div class="container">
         <h4>Veja as informações</h4>
     </div>
+
     <div>
-        <button type="button" onclick="window.location.href='{% url 'index' %}'">
+        {% for person in persons %}
+            <p>{{person.full_name}}</p>
+        {% empty %}
+            <p>Ainda não existem pessoas nessa árvore</p>
+        {% endfor %}
+    </div>
+
+    <div>
+        <a href="{% url 'add_person' tree.id %}">
+            Adicionar pessoa
+        </a>
+    </div>
+
+    <div>
+        <button type="button" onclick="window.location.href='{% url 'trees' %}'">
             Voltar
         </button>
     </div>
