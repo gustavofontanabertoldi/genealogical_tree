@@ -16,7 +16,7 @@
 
     <div>
         {% for person in persons %}
-            <p>{{person.full_name}}</p>
+            <a href="{% url 'view_person' tree.id person.id %}">{{ person.full_name }}</a>
         {% empty %}
             <p>Ainda não existem pessoas nessa árvore</p>
         {% endfor %}

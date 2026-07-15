@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Árvores</title>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ person.full_name}}</h1>
+    </div>
+    <div>
+        <p><strong>Sexo:</strong> {{ person.get_sex_display }}</p>
+        <p><strong>Nascimento:</strong> {{ person.birth_date|date:"d/m/Y" }}</p>
+        <p><strong>Falecimento:</strong>
+        {% if person.death_date %}
+            {{ person.death_date|date:"d/m/Y" }}
+        {% else %}
+            —
+        {% endif %}
+        </p>
+    </div>
+
+    <div>
+        <h4>Eventos</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Tipo</th>
+                    <th>Papel</th>
+                    <th>Data do evento</th>
+                    <th>Local</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for participation in participations %}
+                <tr>
+                    <td>{{participation.event.event_name}}</td>
+                    <td>{{participation.event.get_event_type_display}}</td>
+                    <td>{{participation.get_role_display}}</td>
+                    <td>{{participation.event.event_date|date:"d/m/Y"}}</td>
+                    <td>{{participation.event.event_location}}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">Nenhum evento cadastrado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <button type="button" onclick="window.location.href='{% url 'view_tree' person.tree.id %}'">
+            Voltar
+        </button>
+    </div>
+</body>
+</html>
