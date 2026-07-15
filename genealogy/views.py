@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 
 from .models import Document, Event, EventParticipant, Person, Tree
-from.forms import PersonForm
+from.forms import PersonForm, TreeForm
 
 #============
 # Index (views)
@@ -27,6 +27,19 @@ def view_tree(request, id):
         "persons": tree.persons.all()
     }
     return render(request, "genealogy/tree/view_tree.html", context)
+
+def create_tree(request):
+    if request.method == "POST":
+        form = TreeForm(request.POST)
+        if form.is_valid():
+            tree = form.save()
+            return redirect("view_tree", id=tree.id)
+    else:
+        form = TreeForm()
+        context = {
+            "form": form
+        }
+        return render(request, "genealogy/tree/create_tree.html", context)
 
 #============
 # Person (views)
