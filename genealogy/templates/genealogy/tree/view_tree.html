@@ -3,35 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Árvores</title>
+    <title>{{ tree.name }}</title>
 </head>
 <body>
-    <div class="container">
-        <h1> Bem Vindo a {{tree.name}}!</h1>
-    </div>
-    
-    <div class="container">
-        <h4>Veja as informações</h4>
-    </div>
 
-    <div>
-        {% for person in persons %}
-            <a href="{% url 'view_person' tree.id person.id %}">{{ person.full_name }}</a>
-        {% empty %}
-            <p>Ainda não existem pessoas nessa árvore</p>
-        {% endfor %}
-    </div>
+    <h1>{{ tree.name }}</h1>
 
-    <div>
-        <a href="{% url 'add_person' tree.id %}">
-            Adicionar pessoa
-        </a>
-    </div>
+    <p><strong>Descrição:</strong> {{ tree.description }}</p>
 
-    <div>
-        <button type="button" onclick="window.location.href='{% url 'trees' %}'">
-            Voltar
-        </button>
-    </div>
+    <hr>
+
+    <h2>Pessoas</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Sexo</th>
+                <th>Nascimento</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for person in persons %}
+            <tr>
+                <td>
+                    <a href="{% url 'view_person' tree.id person.id %}">
+                        {{ person.full_name }}
+                    </a>
+                </td>
+                <td>{{ person.get_sex_display }}</td>
+                <td>{{ person.birth_date|date:"d/m/Y" }}</td>
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="3">
+                    Nenhuma pessoa cadastrada.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    <a href="{% url 'add_person' tree.id %}">
+        Adicionar pessoa
+    </a>
+
+    |
+
+    <a href="{% url 'create_event_for_tree' tree.id %}">
+        Criar evento
+    </a>
+
+    <hr>
+
+    <h2>Eventos</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Tipo</th>
+                <th>Data</th>
+                <th>Local</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for event in tree.events.all %}
+            <tr>
+                <td>
+                    <a href="{% url 'view_event' tree.id event.id %}">
+                        {{ event.event_name }}
+                    </a>
+                </td>
+                <td>{{ event.get_event_type_display }}</td>
+                <td>{{ event.event_date|date:"d/m/Y" }}</td>
+                <td>{{ event.event_location }}</td>
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="4">
+                    Nenhum evento cadastrado.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    <button type="button" onclick="window.location.href='{% url 'trees' %}'">
+        Voltar
+    </button>
+
 </body>
 </html>

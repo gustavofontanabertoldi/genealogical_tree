@@ -27,6 +27,11 @@ class Person(models.Model):
 
 class Event(models.Model):
     event_name = models.CharField(max_length=100)
+    tree = models.ForeignKey(
+        Tree,
+        on_delete=models.CASCADE,
+        related_name="events"
+    )
     class EventType(models.TextChoices):
         BIRTH = 'B', 'Nascimento'
         WEDDING = 'W','Casamento'

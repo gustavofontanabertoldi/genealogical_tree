@@ -52,6 +52,12 @@
     </div>
 
     <div>
+        <button type="button" onclick="window.location.href='{% url 'create_event_for_person' person.tree.id person.id%}'">
+            Criar evento para esta pessoa
+        </button>
+    </div>
+
+    <div>
         <button type="button" onclick="window.location.href='{% url 'view_tree' person.tree.id %}'">
             Voltar
         </button>

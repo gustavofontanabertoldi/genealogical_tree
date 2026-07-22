@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ event.event_name }}</title>
+</head>
+<body>
+
+<h1>{{ event.event_name }}</h1>
+
+<p><strong>Tipo:</strong> {{ event.get_event_type_display }}</p>
+
+<p><strong>Data:</strong> {{ event.event_date|date:"d/m/Y" }}</p>
+
+<p><strong>Local:</strong> {{ event.event_location }}</p>
+
+<p><strong>Descrição:</strong></p>
+
+<p>{{ event.description }}</p>
+
+<hr>
+
+<h2>Participantes</h2>
+
+<table border="1">
+
+    <thead>
+
+        <tr>
+
+            <th>Nome</th>
+
+            <th>Papel</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for participation in participations %}
+
+        <tr>
+
+            <td>
+
+                <a href="{% url 'view_person' event.tree.id participation.person.id %}">
+                    {{ participation.person.full_name }}
+                </a>
+
+            </td>
+
+            <td>{{ participation.get_role_display }}</td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+
+            <td colspan="2">
+
+                Nenhum participante.
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+<br>
+
+<a href="{% url 'add_participant' event.tree.id event.id %}">
+    Adicionar participante
+</a>
+
+<br><br>
+
+<a href="{% url 'view_tree' event.tree.id %}">
+    Voltar para árvore
+</a>
+
+</body>
+</html>

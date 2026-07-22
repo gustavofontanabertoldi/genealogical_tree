@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar Evento</title>
+</head>
+<body>
+
+<h1>Criar evento para {{ person.full_name }}</h1>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    <h3>Informações do evento</h3>
+
+    {{ form.as_p }}
+
+    <h3>Papel da pessoa neste evento</h3>
+
+    {{ role_form.as_p }}
+
+    <button type="submit">
+        Criar Evento
+    </button>
+
+</form>
+
+<br>
+
+<a href="{% url 'view_person' person.tree.id person.id %}">
+    Cancelar
+</a>
+
+</body>
+</html>

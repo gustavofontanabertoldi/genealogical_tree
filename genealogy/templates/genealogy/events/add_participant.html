@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Participante</title>
+</head>
+<body>
+
+<h1>Adicionar participante</h1>
+
+<h2>{{ event.event_name }}</h2>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">
+        Adicionar
+    </button>
+
+</form>
+
+<br>
+
+<a href="{% url 'view_event' event.tree.id event.id %}">
+    Voltar
+</a>
+
+</body>
+</html>
